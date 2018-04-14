@@ -15,11 +15,20 @@
     </style>
 -->
 	  <style>
-		  #messages{list-style-type: none;}
+		  #messages{list-style-type: none;margin-top: 100px;}
 		  #messages li {
 			  font-family: 'Noto Serif', serif, sans-serif;
-			  font-style: italic;
+			  font-style: bold;
 			  font-size: 20px;
+			  background-color: aliceblue;
+			  padding: 10px 25px 10px 25px;
+			  border-radius: 5px;
+			  display: inline-block;
+			  margin-bottom: 10px;
+		  }
+		  body{
+			  background-image: url(https://wallpaperstock.net/whatsapp-background-wallpapers_51439_1680x1050.jpg);
+			  background-size: cover;
 		  }
 	  </style>
 	  
@@ -32,13 +41,15 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	  
+	  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="http://imperior.pe.hu/lib/css/emoji.css" rel="stylesheet">
+	  
   </head>
   <body>
 	  
 	  <nav class="navbar navbar-inverse">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
-			
 			<a class="navbar-brand" style="
 		  display: block;
 		  letter-spacing: 2px;
@@ -48,53 +59,26 @@
 		  font-family: 'Cinzel';
 		" href="#">Enigma</a>
 		    </div>
-		    
 		  </div>
 	  </nav>
 	  
 	 
-		    <ul id="messages">
-			  </ul>
-		    <form style="position: fixed;bottom: 0;width: 100%;" action="">
+		   
+		    <form style="position: fixed;top: 55px;width: 100%;" action="">
 				<input type="hidden" id="name">
-			<input class="col-xs-10 input-lg" id="m" autocomplete="off" style="border-color:darkgrey;" placeholder="Enter your text" required><button class="col-xs-2 btn-lg btn-info">Send</button>
+			<input class="col-xs-10 input-lg" id="m" autocomplete="off" style="border-color:darkgrey;color: white !important;overflow: hidden;z-index: 1;" placeholder="Enter your text" data-emojiable="true" data-emoji-input="unicode" required><button class="col-xs-2 btn-lg btn-info">Send</button>
 		    </form>
-	  
+	   <ul id="messages">
+			  </ul>
 	  
 	  
 	  
 
 	  
+	   
 	  <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<!--
-<script>
-  $(function () {
-    var socket = io();
-    $('form').submit(function(){
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-  });
-</script>
--->
-<!--
-	  <script>
-  $(function () {
-    var socket = io();
-	  
-    $('form').submit(function(){
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-    socket.on('chat message', function(msg){ 
-      $('#messages').append($('<li>').text($("#name").val()+ ": " + msg));
-    });
-  });
-</script>
--->
+
 	  <script>
   $(function () {
     var socket = io();
@@ -107,6 +91,7 @@
     });
     socket.on('chat message', function(msg){ 
       $('#messages').append($('<li>').text(msg));
+		$('#messages').append($('<br>'));
     });
   });
 </script>
@@ -123,5 +108,24 @@
 			    document.getElementById('name').value = data.name;
 			}
 	  </script>
+	  <!-- ** Don't forget to Add jQuery here ** -->
+  <script type="text/javascript" src="http://imperior.pe.hu/lib/js/config.js"></script>
+  <script type="text/javascript" src="http://imperior.pe.hu/lib/js/util.js"></script>
+  <script type="text/javascript" src="http://imperior.pe.hu/lib/js/jquery.emojiarea.js"></script>
+  <script type="text/javascript" src="http://imperior.pe.hu/lib/js/emoji-picker.js"></script>
+	  <script>
+      $(function() {
+        // Initializes and creates emoji set from sprite sheet
+        window.emojiPicker = new EmojiPicker({
+          emojiable_selector: '[data-emojiable=true]',
+          assetsPath: 'http://imperior.pe.hu/lib/img/',
+          popupButtonClasses: 'fa fa-smile-o'
+        });
+        // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+        // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+        // It can be called as many times as necessary; previously converted input fields will not be converted again
+        window.emojiPicker.discover();
+      });
+    </script>
   </body>
 </html>
